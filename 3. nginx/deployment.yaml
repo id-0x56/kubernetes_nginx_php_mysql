@@ -1,0 +1,43 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    tier: backend
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: nginx
+        tier: backend
+    spec:
+      volumes:
+        - name: app-pv-storage
+          persistentVolumeClaim:
+            claimName: app-pv-claim
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+            items:
+              - key: config
+                path: app.conf
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: app-pv-storage
+              mountPath: /var/www/id-0x56.com
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d
+
+---

@@ -1,0 +1,40 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php
+  labels:
+    tier: backend
+spec:
+  selector:
+    matchLabels:
+      app: php
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: php
+        tier: backend
+    spec:
+      volumes:
+        - name: app-pv-storage
+          persistentVolumeClaim:
+            claimName: app-pv-claim
+      containers:
+        - name: php
+#          image: php:fpm
+          image: 00x56/php:fpm-alpine
+          lifecycle:
+            postStart:
+              exec:
+                command: [ '/bin/sh', '-c', '/var/www/id-0x56.com/artisan migrate:refresh --seed' ]
+          ports:
+            - name: php
+              containerPort: 9000
+              protocol: TCP
+          volumeMounts:
+            - name: app-pv-storage
+              mountPath: /var/www/id-0x56.com
+
+---
