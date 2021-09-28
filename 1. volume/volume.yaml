@@ -4,17 +4,19 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: app-pv-volume
+  namespace: 00x56
   labels:
     app: app
     type: local
 spec:
-  storageClassName: manual
+  storageClassName: nfs
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   capacity:
     storage: 3Gi
-  hostPath:
-    path: /mnt/data/app
+  nfs:
+    server: 192.168.88.225
+    path: /mnt/nfs_k8s/app
 
 ---
 
@@ -22,17 +24,19 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: mysql-pv-volume
+  namespace: 00x56
   labels:
     app: mysql
     type: local
 spec:
-  storageClassName: manual
+  storageClassName: nfs
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   capacity:
     storage: 3Gi
-  hostPath:
-    path: /mnt/data/mysql
+  nfs:
+    server: 192.168.88.225
+    path: /mnt/nfs_k8s/mysql
 
 ---
 
@@ -40,14 +44,15 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: app-pv-claim
+  namespace: 00x56
 spec:
   selector:
     matchLabels:
       app: app
       type: local
-  storageClassName: manual
+  storageClassName: nfs
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
@@ -58,14 +63,15 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
+  namespace: 00x56
 spec:
   selector:
     matchLabels:
       app: mysql
       type: local
-  storageClassName: manual
+  storageClassName: nfs
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi

@@ -4,6 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
+  namespace: 00x56
   labels:
     tier: backend
 spec:
@@ -30,13 +31,9 @@ spec:
       containers:
         - name: nginx
           image: nginx:latest
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
           volumeMounts:
             - name: app-pv-storage
-              mountPath: /var/www/id-0x56.com
+              mountPath: /var/www/00x56.com
             - name: nginx-config
               mountPath: /etc/nginx/conf.d
 
