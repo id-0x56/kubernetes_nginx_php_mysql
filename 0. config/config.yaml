@@ -51,6 +51,7 @@ metadata:
   name: mysql-config
   namespace: 00x56
 data:
+  DB_HOST: mysql-service
   DB_DATABASE: database
 
 ---
