@@ -13,7 +13,7 @@ metadata:
   name: nginx-config
   namespace: 00x56
 data:
-  config : |
+  config: |
     server {
       root /var/www/00x56.com/public;
       index index.php index.html;

@@ -8,6 +8,8 @@ metadata:
   labels:
     tier: backend
 spec:
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: mysql
