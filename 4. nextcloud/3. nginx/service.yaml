@@ -3,18 +3,18 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-service
-  namespace: 00x56
+  name: nginx-service
+  namespace: nextcloud
   labels:
     tier: backend
 spec:
   selector:
-    app: mysql
+    app: nginx
     tier: backend
   type: ClusterIP
   ports:
-    - port: 3306
-#      targetPort:
-#      name:
+    - port: 80
+      targetPort: 80
+      name: http
 
 ---

@@ -1,0 +1,42 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: nextcloud
+  labels:
+    tier: backend
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: nginx
+        tier: backend
+    spec:
+      volumes:
+        - name: nextcloud-pv-storage
+          persistentVolumeClaim:
+            claimName: nextcloud-pv-claim
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+            items:
+              - key: config
+                path: nginx.conf
+      containers:
+        - name: nginx
+          image: nginx:latest
+          volumeMounts:
+            - name: nextcloud-pv-storage
+              mountPath: /var/www/html
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
+
+---

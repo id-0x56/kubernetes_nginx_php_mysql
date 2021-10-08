@@ -3,8 +3,26 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
+  name: mysql-pv-volume
+  labels:
+    app: mysql
+    type: local
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 3Gi
+  nfs:
+    server: 192.168.88.225
+    path: /mnt/nfs_k8s/mysql
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
   name: app-pv-volume
-  namespace: 00x56
   labels:
     app: app
     type: local
@@ -23,10 +41,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-pv-volume
-  namespace: 00x56
+  name: postgres-pv-volume
   labels:
-    app: mysql
+    app: postgres
     type: local
 spec:
   storageClassName: nfs
@@ -36,44 +53,25 @@ spec:
     storage: 3Gi
   nfs:
     server: 192.168.88.225
-    path: /mnt/nfs_k8s/mysql
+    path: /mnt/nfs_k8s/postgres
 
 ---
 
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolume
 metadata:
-  name: app-pv-claim
-  namespace: 00x56
+  name: nextcloud-pv-volume
+  labels:
+    app: nextcloud
+    type: local
 spec:
-  selector:
-    matchLabels:
-      app: app
-      type: local
   storageClassName: nfs
   accessModes:
     - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mysql-pv-claim
-  namespace: 00x56
-spec:
-  selector:
-    matchLabels:
-      app: mysql
-      type: local
-  storageClassName: nfs
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi
+  capacity:
+    storage: 5Gi
+  nfs:
+    server: 192.168.88.225
+    path: /mnt/nfs_k8s/nextcloud
 
 ---

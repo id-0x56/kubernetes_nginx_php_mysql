@@ -1,0 +1,20 @@
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-pv-claim
+  namespace: 00x56
+spec:
+  selector:
+    matchLabels:
+      app: app
+      type: local
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+---

@@ -1,0 +1,30 @@
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  namespace: nextcloud
+  labels:
+    tier: backend
+spec:
+  serviceName: redis-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: redis
+        tier: backend
+    spec:
+      containers:
+        - name: redis
+          image: redis:alpine
+          env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: 'yes'
+
+---

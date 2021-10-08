@@ -1,0 +1,90 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud
+  namespace: nextcloud
+  labels:
+    tier: backend
+spec:
+  selector:
+    matchLabels:
+      app: nextcloud
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: nextcloud
+        tier: backend
+    spec:
+      volumes:
+        - name: nextcloud-pv-storage
+          persistentVolumeClaim:
+            claimName: nextcloud-pv-claim
+      containers:
+        - name: nextcloud
+          image: nextcloud:fpm-alpine
+          volumeMounts:
+            - name: nextcloud-pv-storage
+              mountPath: /var/www/html
+          env:
+            - name: NEXTCLOUD_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: nextcloud-config
+                  key: NEXTCLOUD_URL
+            - name: NEXTCLOUD_TRUSTED_DOMAINS
+              valueFrom:
+                configMapKeyRef:
+                  name: nextcloud-config
+                  key: NEXTCLOUD_TRUSTED_DOMAINS
+            - name: NEXTCLOUD_DATA_DIR
+              valueFrom:
+                configMapKeyRef:
+                  name: nextcloud-config
+                  key: NEXTCLOUD_DATA_DIR
+            - name: NEXTCLOUD_UPLOAD_MAX_FILESIZE
+              valueFrom:
+                configMapKeyRef:
+                  name: nextcloud-config
+                  key: NEXTCLOUD_UPLOAD_MAX_FILESIZE
+            - name: NEXTCLOUD_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secret
+                  key: NEXTCLOUD_ADMIN_USER
+            - name: NEXTCLOUD_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secret
+                  key: NEXTCLOUD_ADMIN_PASSWORD
+            # postgres
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: DB_HOST
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: DB_DATABASE
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: DB_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: DB_PASSWORD
+            # redis
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: redis-config
+                  key: DB_HOST
+
+---

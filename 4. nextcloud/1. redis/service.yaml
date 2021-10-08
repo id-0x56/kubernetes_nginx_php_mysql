@@ -1,0 +1,21 @@
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  namespace: nextcloud
+  labels:
+    tier: backend
+spec:
+  selector:
+    app: redis
+    tier: backend
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - port: 6379
+#      targetPort:
+#      name:
+
+---
