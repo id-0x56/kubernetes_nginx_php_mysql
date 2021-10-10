@@ -69,9 +69,9 @@ spec:
   accessModes:
     - ReadWriteMany
   capacity:
-    storage: 5Gi
+    storage: 25Gi
   nfs:
-    server: 192.168.88.225
+    server: 192.168.88.140
     path: /mnt/nfs_k8s/nextcloud
 
 ---

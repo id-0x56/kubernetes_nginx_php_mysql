@@ -3,10 +3,10 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: afraid-cron-job
-  namespace: 00x56
+  name: nextcloud-cron-job
+  namespace: nextcloud
 spec:
-  schedule: "0,5,10,15,20,25,30,35,40,45,50,55 * * * *"
+  schedule: '*/5 * * * *'
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 3
@@ -15,13 +15,13 @@ spec:
       template:
         metadata:
           labels:
-            app: afraid-cron-job
+            app: nextcloud-cron-job
         spec:
           restartPolicy: Never
           containers:
-            - name: afraid-cron-job
+            - name: nextcloud-cron-job
               image: curlimages/curl
               imagePullPolicy: IfNotPresent
-              command: [ '/bin/sh', '-c', '/usr/bin/curl -s https://freedns.afraid.org/dynamic/update.php' ]
+              command: [ '/bin/sh', '-c', '/usr/bin/curl -ks https://nextcloud.00x56.com/cron.php' ]
 
 ---
