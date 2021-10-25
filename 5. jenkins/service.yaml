@@ -18,3 +18,22 @@ spec:
 #      name:
 
 ---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-discovery
+  namespace: jenkins
+  labels:
+    tier: backend
+spec:
+  selector:
+    app: jenkins
+    tier: backend
+  type: ClusterIP
+  ports:
+    - port: 50000
+#      targetPort:
+#      name:
+
+---

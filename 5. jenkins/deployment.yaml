@@ -28,5 +28,7 @@ spec:
           volumeMounts:
             - name: jenkins-pv-storage
               mountPath: /var/jenkins_home
+      securityContext:
+        fsGroup: 1000
 
 ---
