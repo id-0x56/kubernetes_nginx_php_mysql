@@ -1,0 +1,20 @@
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-service
+  namespace: jenkins
+  labels:
+    tier: backend
+spec:
+  selector:
+    app: jenkins
+    tier: backend
+  type: ClusterIP
+  ports:
+    - port: 8080
+#      targetPort:
+#      name:
+
+---

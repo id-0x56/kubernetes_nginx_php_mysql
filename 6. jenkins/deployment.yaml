@@ -1,0 +1,32 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+  namespace: jenkins
+  labels:
+    tier: backend
+spec:
+  selector:
+    matchLabels:
+      app: jenkins
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: jenkins
+        tier: backend
+    spec:
+      volumes:
+        - name: jenkins-pv-storage
+          persistentVolumeClaim:
+            claimName: jenkins-pv-claim
+      containers:
+        - name: jenkins
+          image: jenkins/jenkins:lts-jdk11
+          volumeMounts:
+            - name: jenkins-pv-storage
+              mountPath: /var/jenkins_home
+
+---

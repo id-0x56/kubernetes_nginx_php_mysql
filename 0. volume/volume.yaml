@@ -75,3 +75,24 @@ spec:
     path: /mnt/nfs_k8s/nextcloud
 
 ---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jenkins-pv-volume
+  labels:
+    app: jenkins
+    type: local
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 5Gi
+  nfs:
+    server: 192.168.88.220
+    path: /mnt/nfs_k8s/jenkins
+
+
+
+---
