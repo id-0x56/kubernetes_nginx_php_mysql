@@ -26,7 +26,7 @@ spec:
           emptyDir: {}
       containers:
         - name: jenkins
-          image: 00x56/jenkins
+          image: 00x56/jenkins:lts-jdk11
           volumeMounts:
             - name: jenkins-pv-storage
               mountPath: /var/jenkins_home
@@ -37,6 +37,9 @@ spec:
             limits:
               cpu: 1000m
               memory: 2000Mi
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
         - name: dind
           image: docker:20.10-dind
           volumeMounts:
