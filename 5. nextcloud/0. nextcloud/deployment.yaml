@@ -29,6 +29,11 @@ spec:
             - name: nextcloud-pv-storage
               mountPath: /var/www/html
           env:
+            - name: NEXTCLOUD_ADMIN_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: nextcloud-config
+                  key: NEXTCLOUD_ADMIN_USER
             - name: NEXTCLOUD_URL
               valueFrom:
                 configMapKeyRef:
@@ -49,11 +54,6 @@ spec:
                 configMapKeyRef:
                   name: nextcloud-config
                   key: NEXTCLOUD_UPLOAD_MAX_FILESIZE
-            - name: NEXTCLOUD_ADMIN_USER
-              valueFrom:
-                secretKeyRef:
-                  name: nextcloud-secret
-                  key: NEXTCLOUD_ADMIN_USER
             - name: NEXTCLOUD_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -63,28 +63,28 @@ spec:
             - name: POSTGRES_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-config
-                  key: DB_HOST
+                  name: nextcloud-config
+                  key: POSTGRES_HOST
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-config
-                  key: DB_DATABASE
+                  name: nextcloud-config
+                  key: POSTGRES_DB
             - name: POSTGRES_USER
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-config
-                  key: DB_USERNAME
+                  name: nextcloud-config
+                  key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
-                  key: DB_PASSWORD
+                  name: nextcloud-secret
+                  key: POSTGRES_PASSWORD
             # redis
             - name: REDIS_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: redis-config
-                  key: DB_HOST
+                  name: nextcloud-config
+                  key: REDIS_HOST
 
 ---

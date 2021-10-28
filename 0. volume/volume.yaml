@@ -12,10 +12,29 @@ spec:
   accessModes:
     - ReadWriteMany
   capacity:
-    storage: 3Gi
+    storage: 10Gi
   nfs:
     server: 192.168.88.220
-    path: /mnt/nfs_k8s/mysql
+    path: /mnt/nfs_k8s/database/mysql
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-pv-volume
+  labels:
+    app: postgres
+    type: local
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 10Gi
+  nfs:
+    server: 192.168.88.220
+    path: /mnt/nfs_k8s/database/postgres
 
 ---
 
@@ -41,25 +60,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: postgres-pv-volume
-  labels:
-    app: postgres
-    type: local
-spec:
-  storageClassName: nfs
-  accessModes:
-    - ReadWriteMany
-  capacity:
-    storage: 3Gi
-  nfs:
-    server: 192.168.88.220
-    path: /mnt/nfs_k8s/postgres
-
----
-
-apiVersion: v1
-kind: PersistentVolume
-metadata:
   name: nextcloud-pv-volume
   labels:
     app: nextcloud
@@ -73,26 +73,5 @@ spec:
   nfs:
     server: 192.168.88.220
     path: /mnt/nfs_k8s/nextcloud
-
----
-
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: jenkins-pv-volume
-  labels:
-    app: jenkins
-    type: local
-spec:
-  storageClassName: nfs
-  accessModes:
-    - ReadWriteMany
-  capacity:
-    storage: 5Gi
-  nfs:
-    server: 192.168.88.220
-    path: /mnt/nfs_k8s/jenkins
-
-
 
 ---

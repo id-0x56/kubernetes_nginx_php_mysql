@@ -1,0 +1,37 @@
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: database
+data:
+  DB_HOST: postgres-service
+  DB_DATABASE: postgres
+  DB_USERNAME: username
+  init_db: |
+    set -e
+    set -u
+
+    psql -v ON_ERROR_STOP=1 --username "username" --dbname "postgres" <<-EOSQL
+      CREATE DATABASE nextcloud;
+      GRANT ALL PRIVILEGES ON DATABASE nextcloud TO username;
+    EOSQL
+
+    psql -v ON_ERROR_STOP=1 --username "username" --dbname "postgres" <<-EOSQL
+      CREATE DATABASE gitlab;
+      GRANT ALL PRIVILEGES ON DATABASE gitlab TO username;
+    EOSQL
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+  namespace: database
+type: Opaque
+data:
+  DB_PASSWORD: cGFzc3dvcmQ=
+
+---

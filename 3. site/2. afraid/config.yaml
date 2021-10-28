@@ -1,0 +1,12 @@
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: afraid-secret
+  namespace: 00x56
+type: Opaque
+data:
+  AFRAID_TOKEN: dG9rZW4=
+
+---

@@ -4,7 +4,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres
-  namespace: nextcloud
+  namespace: database
   labels:
     tier: backend
 spec:
@@ -24,13 +24,22 @@ spec:
         - name: postgres-pv-storage
           persistentVolumeClaim:
             claimName: postgres-pv-claim
+        - name: postgres-config
+          configMap:
+            name: postgres-config
+            items:
+              - key: init_db
+                path: init_db.sh
       containers:
         - name: postgres
           image: postgres:alpine
-          imagePullPolicy: 'IfNotPresent'
+          imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: postgres-pv-storage
               mountPath: /var/lib/postgresql/data
+            - name: postgres-config
+              mountPath: /docker-entrypoint-initdb.d/init_db.sh
+              subPath: init_db.sh
           env:
             - name: POSTGRES_DB
               valueFrom:

@@ -4,7 +4,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: redis
-  namespace: nextcloud
+  namespace: database
   labels:
     tier: backend
 spec:

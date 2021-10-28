@@ -4,7 +4,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-config
-  namespace: nextcloud
+  namespace: database
 data:
   DB_HOST: redis-service
 

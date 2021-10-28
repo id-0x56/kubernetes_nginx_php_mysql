@@ -3,18 +3,18 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: postgres-pv-claim
-  namespace: nextcloud
+  name: mysql-pv-claim
+  namespace: database
 spec:
   selector:
     matchLabels:
-      app: postgres
+      app: mysql
       type: local
   storageClassName: nfs
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
 
 ---

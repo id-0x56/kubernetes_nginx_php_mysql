@@ -1,24 +1,17 @@
 ---
 
 apiVersion: v1
-kind: Namespace
-metadata:
-  name: 00x56
-
----
-
-apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mysql-config
-  namespace: 00x56
+  namespace: database
 data:
   DB_HOST: mysql-service
   DB_DATABASE: database
   DB_USERNAME: username
   init_db: |
-    # CREATE DATABASE IF NOT EXISTS `laravel` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
-    # GRANT ALL ON `laravel`.* TO 'username'@'%';
+    CREATE DATABASE IF NOT EXISTS `laravel` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
+    GRANT ALL ON `laravel`.* TO 'username'@'%';
 
     FLUSH PRIVILEGES;
 
@@ -28,7 +21,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: mysql-secret
-  namespace: 00x56
+  namespace: database
 type: Opaque
 data:
   DB_PASSWORD: cGFzc3dvcmQ=

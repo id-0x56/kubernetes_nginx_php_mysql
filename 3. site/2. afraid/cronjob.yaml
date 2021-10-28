@@ -22,6 +22,12 @@ spec:
             - name: afraid-cron-job
               image: curlimages/curl
               imagePullPolicy: IfNotPresent
-              command: [ '/bin/sh', '-c', '/usr/bin/curl -ks https://freedns.afraid.org/dynamic/update.php' ]
+              command: [ '/bin/sh', '-c', '/usr/bin/curl -ks https://freedns.afraid.org/dynamic/update.php?$(AFRAID_TOKEN)' ]
+              env:
+                - name: AFRAID_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: afraid-secret
+                      key: AFRAID_TOKEN
 
 ---

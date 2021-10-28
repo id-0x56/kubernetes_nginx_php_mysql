@@ -6,10 +6,17 @@ metadata:
   name: nextcloud-config
   namespace: nextcloud
 data:
+  NEXTCLOUD_ADMIN_USER: admin
   NEXTCLOUD_URL: https://nextcloud.00x56.com
   NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.00x56.com
   NEXTCLOUD_DATA_DIR: /var/www/html/data
   NEXTCLOUD_UPLOAD_MAX_FILESIZE: 4G
+  # postgres
+  POSTGRES_HOST: postgres-service.database
+  POSTGRES_DB: nextcloud
+  POSTGRES_USER: username
+  # redis
+  REDIS_HOST: redis-service.database
 
 ---
 
@@ -20,7 +27,7 @@ metadata:
   namespace: nextcloud
 type: Opaque
 data:
-  NEXTCLOUD_ADMIN_USER: YWRtaW4=
   NEXTCLOUD_ADMIN_PASSWORD: cGFzc3dvcmQ=
+  POSTGRES_PASSWORD: cGFzc3dvcmQ=
 
 ---
