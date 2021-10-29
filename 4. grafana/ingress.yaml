@@ -3,7 +3,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: prometheus-grafana-ingress
+  name: grafana-ingress
   namespace: monitoring
   annotations:
     kubernetes.io/ingress.class: "nginx"
@@ -13,10 +13,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - dashboard.00x56.com
-      secretName: dashboard-00x56-tls
+        - grafana.00x56.com
+      secretName: grafana-00x56-tls
   rules:
-    - host: dashboard.00x56.com
+    - host: grafana.00x56.com
       http:
         paths:
           - path: /
