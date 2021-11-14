@@ -10,18 +10,20 @@ data:
   DB_DATABASE: postgres
   DB_USERNAME: username
   init_db: |
+    #!/bin/bash
+
     set -e
     set -u
 
-    psql -v ON_ERROR_STOP=1 --username "username" --dbname "postgres" <<-EOSQL
+    psql -v ON_ERROR_STOP=1 --username 'username' --dbname 'postgres' << EOF
       CREATE DATABASE nextcloud;
       GRANT ALL PRIVILEGES ON DATABASE nextcloud TO username;
-    EOSQL
+    EOF
 
-    psql -v ON_ERROR_STOP=1 --username "username" --dbname "postgres" <<-EOSQL
+    psql -v ON_ERROR_STOP=1 --username 'username' --dbname 'postgres' << EOF
       CREATE DATABASE gitlab;
       GRANT ALL PRIVILEGES ON DATABASE gitlab TO username;
-    EOSQL
+    EOF
 
 ---
 
