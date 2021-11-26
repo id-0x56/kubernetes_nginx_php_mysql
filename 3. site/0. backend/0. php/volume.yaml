@@ -3,12 +3,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: app-pv-claim
+  name: backend-pv-claim
   namespace: 00x56
 spec:
   selector:
     matchLabels:
-      app: app
+      tier: backend
       type: local
   storageClassName: nfs
   accessModes:

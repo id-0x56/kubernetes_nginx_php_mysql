@@ -19,9 +19,9 @@ spec:
         tier: backend
     spec:
       volumes:
-        - name: app-pv-storage
+        - name: backend-pv-storage
           persistentVolumeClaim:
-            claimName: app-pv-claim
+            claimName: backend-pv-claim
       containers:
         - name: php
           image: 00x56/php:fpm-alpine
@@ -30,7 +30,7 @@ spec:
               exec:
                 command: [ '/bin/sh', '-c', '/var/www/00x56.com/artisan migrate:refresh --seed' ]
           volumeMounts:
-            - name: app-pv-storage
+            - name: backend-pv-storage
               mountPath: /var/www/00x56.com
 
 ---

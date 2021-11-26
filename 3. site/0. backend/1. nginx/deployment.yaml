@@ -19,9 +19,9 @@ spec:
         tier: backend
     spec:
       volumes:
-        - name: app-pv-storage
+        - name: backend-pv-storage
           persistentVolumeClaim:
-            claimName: app-pv-claim
+            claimName: backend-pv-claim
         - name: nginx-config
           configMap:
             name: nginx-config
@@ -32,7 +32,7 @@ spec:
         - name: nginx
           image: nginx:latest
           volumeMounts:
-            - name: app-pv-storage
+            - name: backend-pv-storage
               mountPath: /var/www/00x56.com
             - name: nginx-config
               mountPath: /etc/nginx/conf.d

@@ -41,9 +41,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: app-pv-volume
+  name: backend-pv-volume
   labels:
-    app: app
+    tier: backend
     type: local
 spec:
   storageClassName: nfs
@@ -53,7 +53,26 @@ spec:
     storage: 3Gi
   nfs:
     server: 192.168.88.220
-    path: /mnt/nfs_k8s/app
+    path: /mnt/nfs_k8s/app/backend
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: frontend-pv-volume
+  labels:
+    tier: frontend
+    type: local
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 3Gi
+  nfs:
+    server: 192.168.88.220
+    path: /mnt/nfs_k8s/app/frontend
 
 ---
 
